@@ -1,0 +1,37 @@
+name: Build BleepTube
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: macos-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Theos
+        uses: waruhachi/theos-action@v2.4.6
+        with:
+          theos-src: 'theos/theos'
+          theos-branch: 'master'
+          sdks-src: 'theos/sdks'
+          sdks-branch: 'master'
+          libgcuniversal: 'false'
+          altlist: 'false'
+
+      - name: Build
+        run: |
+          make clean package FINALPACKAGE=1
+          mkdir -p out
+          cp packages/*.deb out/
+          find .theos -type f -name 'BleepTube.dylib' -exec cp {} out/BleepTube.dylib \;
+          ls -lah out
+
+      - name: Upload Feather files
+        uses: actions/upload-artifact@v4
+        with:
+          name: BleepTube-Feather
+          path: out/*
