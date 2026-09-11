@@ -1,0 +1,9 @@
+Package: com.bleeptube.tweak
+Name: BleepTube
+Version: 0.1.0
+Architecture: iphoneos-arm
+Description: Automatically mutes and bleeps profanity in YouTube using timed captions.
+Maintainer: BleepTube
+Author: BleepTube
+Section: Tweaks
+Depends: mobilesubstrate (>= 0.9.5000)
